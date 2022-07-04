@@ -19,9 +19,12 @@ public class NavePlayer : MonoBehaviour
     public Transform[] posicoesArmas;
     private Transform armaAtual;
 
+    private int vidas;
+
     // Start is called before the first frame update
     void Start()
     {
+        this.vidas = 5;
         this.intervaloTiro = 0;
 
         this.armaAtual = this.posicoesArmas[0];
@@ -47,18 +50,45 @@ public class NavePlayer : MonoBehaviour
         float velocidadeY = (vertical * this.velocidadeMovimento);
         //atribuindo os vetores (variaveis) velocidadeX e velocidadeY a velocidade do rigidbody
         this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY);
-        
+
 
 
     }
-    private void Atirar(){
+    private void Atirar() {
         //criando uma instancia de um novo laser, na posicao da arma da nave e sem rotacionar
         Instantiate(this.laserPrefab, this.armaAtual.position, Quaternion.identity);
-        if (this.armaAtual == this.posicoesArmas[0]){
+        if (this.armaAtual == this.posicoesArmas[0]) {
             this.armaAtual = this.posicoesArmas[1];
 
-        }else{
+        } else {
             this.armaAtual = posicoesArmas[0];
         }
     }
+
+    public int Vida
+    {
+        get
+        {
+            return this.vidas;
+        }
+        set
+        {
+            this.vidas = value;
+            if(this.vidas < 0)
+            {
+                this.vidas = 0;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Inimigo"))
+        {
+            vidas--;
+            Enemy inimigo = collider.GetComponent<Enemy>();
+            inimigo.Destruir(false);
+        }
+    }
+
 }

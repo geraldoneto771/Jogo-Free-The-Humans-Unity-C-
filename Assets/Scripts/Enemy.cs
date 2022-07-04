@@ -22,8 +22,12 @@ public class Enemy : MonoBehaviour
         this.rigidbody.velocity = new Vector2(0,-this.velocidadeY);
     }
 
-    public void Destruir(){
-        PointController.Pontuacao++;
+    public void Destruir(bool derrotado){
+        if (derrotado)
+        {
+            PointController.Pontuacao++;
+            
+        }
         Destroy(this.gameObject);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class NavePlayer : MonoBehaviour
 {
@@ -74,9 +75,10 @@ public class NavePlayer : MonoBehaviour
         set
         {
             this.vidas = value;
-            if(this.vidas < 0)
+            if(this.vidas <= 0)
             {
                 this.vidas = 0;
+                
             }
         }
     }
@@ -88,6 +90,7 @@ public class NavePlayer : MonoBehaviour
             vidas--;
             Enemy inimigo = collider.GetComponent<Enemy>();
             inimigo.Destruir(false);
+            Debug.Log(vidas);
         }
     }
 
